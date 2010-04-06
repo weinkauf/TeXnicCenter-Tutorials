@@ -1,0 +1,129 @@
+\documentclass[parskip=half-]{scrartcl}
+\usepackage[UKenglish]{babel}
+\usepackage{libertine}
+\usepackage[T1]{fontenc}
+\usepackage[ansinew]{inputenc}
+\usepackage{tikz}
+\usepackage{hyperref}
+
+\title{TeXnicCenter com o Sumatra PDF}
+\author{Baseado em um tutorial por\\
+Martin Hehn\thanks{martin.hehn@manchester.ac.uk}\\
+Atualizado e corrigido por\\
+Benjamin Danowski\thanks{benjamin.danowski@web.de}}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Breve Introdução}
+Este tutorial descreve o uso do Sumatra PDF viewer (v 0.9.4) em combinação com o TeXnicCenter (v 1.0). 
+
+Após bem sucedida configuração o Sumatra PDF reconhece mudanças no arquivo PDF que resultam em repetidas compilações no TeXnicCenter (TC) e atualiza a visualização do documento automaticamente. Você não tem que fechar e reiniciar o programa manualmente toda a hora. Ao pressionar o botão F5 no TC Sumatra PDF mostra a página e a seção em que o cursor reside. O Sumatra vem à frente ao fazer isso.\\
+\textbf{Por favor note:} Atualmente a frente de pesquisa só funciona se o nome do arquivo e seu caminho inteiro não contêm espaços!
+
+Um duplo clique no Sumatra PDF deve colocar o cursor TCs na seção correspondente. TC vem para a frente, fazendo isso.
+
+\section{Software}
+
+\begin{description}
+	\item[Sumatra] Baixe o Sumatra PDF 0.9.4 em  \url{http://blog.kowalczyk.info/software/sumatrapdf/index.html} 
+	\item[TeXnicCenter] Baixe a última versão (v 1.0). (\url{http://www.texniccenter.org/})
+	\item[Distribution] Supõe-se que você tenha uma distribuição \LaTeX\ já instalada, e.g. MiKTeX 2.7 (\url{http://miktex.org/}).\\
+TeX Live 2008 (\url{http://www.tug.org/texlive/}) também faz o trabalho. Entretanto, TeX Live 2008 é distribuído com uma versão com erros do \texttt{SyncTeX} parser, pois você tem que atualizar os seguintes arquivos:
+\begin{itemize}
+	\item \texttt{pdftex.dll},
+	\item \texttt{pdftex.exe} e
+	\item \texttt{kpathseaxxx.dll}
+\end{itemize}
+Eles podem ser baixados em \url{http://www.tug.org/svn/texlive/trunk/Master/bin/win32/}. \texttt{xxx} representa um número de 3 dígitos. Se você tiver baixado uma versão errada, você vai notar. Depois disto você quer atualizar os arquivos de formato, usando o gerenciador de TeX Live.
+\end{description}
+
+\section{Configurações no Sumatra PDF}
+Desde a versão 0.9.4 não são necessárias alterações. A linha de comando é emitida pelo TC. Se você cometeu um erro pode ser necessária a exclusão do arquivo de configuração na pasta do Sumatra PDF e \texttt(.synctex) o arquivo correspondente ao seu arquivo de origem.
+%Abra o Sumatra e vá para:
+
+%\begin{tikzpicture}
+%\node (a) at (0,0) {\texttt{Arquivo}};
+%\node (b) at (5,-1) {\texttt{Defina pesquisa de linha de comando inversa}};
+%\node (c) at (0,-1) {};
+%\draw [-] (a.south) -- (c.center) -- (b.west);
+%\end{tikzpicture}
+
+%Insira o seguinte código (Nomes de caminhos podem variar):\\
+%\verb+"C:\Programme\TeXnicCenter\TEXCNTR.EXE" /ddecmd "[goto('%f','%l')]'"+
+
+\section{Cofigurações em TeXnicCenter}
+É útil definir um perfil de saída extra para o Sumatra:
+
+\begin{tikzpicture}
+\node (a) at (0,0) {\texttt{Construir}};
+\node (b) at (5,-1) {\texttt{Definir perfis de saída}};
+\node (c) at (0,-1) {};
+\draw [-] (a.south) -- (c.center) -- (b.west);
+\end{tikzpicture}
+
+\begin{enumerate}
+	\item Clique no perfil existente \texttt{LaTeX$=>$PDF} 
+	\item Clique \texttt{Copiar}
+	\item Nomeie o novo perfil, e.g. \texttt{LaTeX$=>$PDF (Sumatra)}
+\end{enumerate}
+
+Cheque que o novo perfil está destacado. Existem três abas: \texttt{(La)Tex}, \texttt{Pós processador} e \texttt{Visualizador}.
+
+\textbf{(La)Tex}\\
+Rapidamente cheque se o caminho do compilador está correto (Nomes de caminhos podem variar)\\
+	 \verb+C:\Programme\MiKTeX 2.7\miktex\bin\pdflatex.exe+
+
+Em \texttt{Argumentos de linha de comando para passar para o compilador} insira o seguinte\\
+\verb+-synctex=-1 -interaction=nonstopmode "%pm"+
+
+\textbf{Pós processador}\\
+Nenhuma configuração necessária.
+
+\textbf{Visualização}\\
+Em \texttt{Caminho do executável} insira a seguinte linha (nomes de caminhos podem variar):\\
+\verb+C:\Programme\SumatraPDF\SumatraPDF.exe -inverse-search+\\ \verb+"\"C:\Programme\TeXnicCenter\TEXCNTR.EXE\" /ddecmd \"[goto('%f','%l')]'\""+
+
+\textbf{NOTA:} Existe um espaço depois de \texttt{pesquisa}, o comando foi dividido em duas linhas para caber na página.
+
+Em \texttt{Visualizar saída do projeto} defina o botão radio para \texttt{Argumentos de linha de comando}
+
+Para \texttt{Comando:} enter:\\
+\verb+"%bm.pdf"+
+
+Em \texttt{Forward search} defina o botão rádio para \texttt{Comando DDE} 
+
+Em \texttt{Comando:} insira\\
+\verb+[ForwardSearch("%bm.pdf","%Wc",%l,0,0,1)]+\\
+\texttt{Servidor:} \texttt{SUMATRA}\\
+\texttt{Tópico:} \texttt{Controle}
+
+Em \texttt{Feche o documento antes de executar o (La)TeX} defina o botão rádio para \texttt{Não feche}.\\
+\\
+Se você gosta de ler sobre os comandos DDE do Sumatra PDF:\\
+\\
+\url{http://code.google.com/p/sumatrapdf/wiki/DDEcommands}
+
+\section{Conselho importante}
+\begin{itemize}
+	\item \textbf{Novamente:} Atualmente a frente de pesquisa só funciona se o nome do arquivo e seu caminho inteiro não contêm espaços!
+	\item \textbf{Cuidado:} Se você copiar as linhas de comando e caminhos de e.g. Adobe Reader um apóstrofo (certo) recebe um acento (errado). Isto quebra a funcionalidade. Portanto, você tem que substituir os acentos com apóstrofos (a tecla acima do  ``Enter''-key).\\
+	No entanto, um usuário observou que não são todos os visualizadores de PDF que demonstram esse comportamento, Foxit Reader por exemplo copia os apóstrofos aparentemente de forma correta.
+	\item Conselho do usuário também mostrou que reiniciar o TC pode ser necessário para ativar as mudanças.
+	\item Além disso, você deve usar \verb\include\ para a incorporação de outros arquivos \TeX. Se você usar \verb\input\ você tem que anexar o final do arquivo.
+\end{itemize}
+
+
+\rule{40pt}{2pt}\\
+Aproveite
+
+\section{Histórico das versões}
+11.08.2009: Primeira versão\\
+\\
+23.09.2009: Incluídos os conselhos de utilização de C. Wiethoff sobre reiniciar o comportamento de copiar\&colar dos visualizadores de PDF existentes. Inclui conselhos em espaços de nomes de caminho.\\
+\\
+01.10.2009: Sugestão de C. A. Vallejo Pinto sobre como alterar a configuração para que o Sumatra PDF venha para a frente ao pressionar ``F5''. Adicionado vínculo para comandos DDE do Sumatra PDF.
+
+Obrigado pela resposta!
+\end{document}

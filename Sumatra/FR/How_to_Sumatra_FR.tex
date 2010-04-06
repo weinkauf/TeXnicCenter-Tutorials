@@ -1,0 +1,133 @@
+\documentclass[parskip=half-]{scrartcl}
+\usepackage[french]{babel}
+\usepackage{libertine}
+\usepackage[T1]{fontenc}
+\usepackage[ansinew]{inputenc}
+\usepackage{tikz}
+\usepackage{hyperref}
+
+\title{TeXnicCenter avec Sumatra PDF}
+\author{Basé sur le tutoriel écrit par\\
+Martin Hehn\thanks{martin.hehn@manchester.ac.uk}\\
+mis à jour et corrigé par\\
+Benjamin Danowski\thanks{benjamin.danowski@web.de}}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Courte introduction}
+Ce tutoriel décrit l'utilisation du Viewer PDF Sumatra (v 1.0.1) en association avec TeXnicCenter (v 1.0).
+
+Après un paramétrage approprié, Sumatra PDF reconnaît les changements, dans le fichier PDF, résultants des compilations successives dans TeXnicCenter (TC) et rafraîchit automatiquement la fenêtre de visualisation. Il n'est pas nécessaire de fermer le logiciel à chaque fois. En appuyant sur la touche F5 du clavier, dans TC, Sumatra PDF affiche la page et la partie dans lesquelles le curseur se trouve.  Par cette action, la fenêtre de Sumatra est positionnée au premier plan.\\
+\textbf{Note importante :} Actuellement la fonction de recherche avancée ne fonctionne que si le nom du fichier et la globalité de son chemin d'accès ne possède pas d'accents!
+
+Un double-clic dans Sumatra PDF devrait positionner le cursor de TC dans la partie correspondante. La fenêtre de TC est positionnée au premier plan par cette méthode.
+
+\section{Logiciel}
+
+\begin{description}
+	\item[Sumatra] Télécharger Sumatra PDF 1.0.1 à l'adresse \url{http://blog.kowalczyk.info/software/sumatrapdf/index.html} 
+	\item[TeXnicCenter] Télécharger la dernière version (v 1.0). (\url{http://www.texniccenter.org/})
+	\item[Distribution] On suppose qu'une distribution \LaTeX\ est déjà installée, i.e. MiKTeX 2.8 (\url{http://miktex.org/}).\\
+TeX Live 2008 (\url{http://www.tug.org/texlive/}) peut aussi être utilisé. Cependant, TeX Live 2008 est fourni avec une version corrompue de l'analyseur syntaxique \texttt{SyncTeX}. Par conséquent, il sera nécessaire de mettre à jour les fichiers suivants :
+\begin{itemize}
+	\item \texttt{pdftex.dll},
+	\item \texttt{pdftex.exe} und
+	\item \texttt{kpathseaxxx.dll}
+\end{itemize}
+Ils peuvent être téléchargés à l'adresse \url{http://www.tug.org/svn/texlive/trunk/Master/bin/win32/}. \texttt{xxx} correspond à un chiffre à 3 décimales. Si une mauvaise version a été téléchargée, il sera facile de l'identifier. Après cela il sera possible de mettre à jour les fichiers modèles en utilisant le gestionnaire de fichiers de TeX Live.\\
+Si vous avez des informations sur TeX Live 2009 n'hésitez pas à me contacter pour me faire part de vos découvertes.
+\end{description}
+
+\section{Réglages dans Sumatra PDF}
+Depuis la version 0.9.4 aucun changement n'est nécessaire. La line de commande est fournie par TC. Si une erreur est commise, il sera peut-être nécessaire de supprimer le fichier de configuration dans le dossier de Sumatra PDF ainsi que le fichier \texttt{.synctex} correspondant à votre fichier source.
+
+%Open up Sumatra and go to:
+
+%\begin{tikzpicture}
+%\node (a) at (0,0) {\texttt{File}};
+%\node (b) at (5,-1) {\texttt{Set inverse search command-line}};
+%\node (c) at (0,-1) {};
+%\draw [-] (a.south) -- (c.center) -- (b.west);
+%\end{tikzpicture}
+
+%Insert the following code (Path names may vary):\\
+%\verb+"C:\Programme\TeXnicCenter\TEXCNTR.EXE" /ddecmd "[goto('%f','%l')]'"+
+
+\section{Réglages dans TeXnicCenter}
+Il est utile de définir un nouveau profil de sortie pour Sumatra:
+
+\begin{tikzpicture}
+\node (a) at (0,0) {\texttt{Build}};
+\node (b) at (5,-1) {\texttt{Define output profiles}};
+\node (c) at (0,-1) {};
+\draw [-] (a.south) -- (c.center) -- (b.west);
+\end{tikzpicture}
+
+\begin{enumerate}
+	\item Cliquer sur le projet \texttt{LaTeX$=>$PDF} existant
+	\item Cliquer sur \texttt{Copy}
+	\item Nommer le nouveau profil, i.e. \texttt{LaTeX$=>$PDF (Sumatra)}
+\end{enumerate}
+
+Vérifier que le nouveau profil est mis en surbrillance. Il y a trois onglets : \texttt{(La)Tex}, \texttt{Postprocessor} et \texttt{Viewer}.
+
+\textbf{(La)Tex}\\
+Vérifier rapidement que le chemin d'accès au compilateur est correct (ces chemins peuvent varier d'une installation à une autre)\\
+\verb+"C:\Program Files\MiKTeX 2.7\miktex\bin\pdflatex.exe"+
+
+Dans la zone \og{\texttt{Command line arguments to pass to the compiler}\fg} saisir la commande suivante\\
+\verb+-synctex=-1 -interaction=nonstopmode "%Wm"+
+
+\textbf{Postprocessor}\\
+Aucun réglage nécessaire.
+
+\textbf{Viewer}\\
+Dans la zone \og{\texttt{Path of executable}\fg} saisir la commande suivante (les chemins d'accès peuvent varier):\\
+\verb+"C:\Program Files\SumatraPDF\SumatraPDF.exe" -inverse-search+\\ \verb+"\"C:\Program Files\TeXnicCenter\TEXCNTR.EXE\" /ddecmd \"[goto('%f','%l')]\""+
+
+\textbf{NOTE:} Il y a un espace après \texttt{search}, la commande a juste été scindée en deux lignes pour tenir dans la page. De plus, n'oubliez pas d'inclure les guillemets s'il y a des espaces dans le chemin d'accès (i.e. ''Program Files'' sur des systèmes anglais).
+
+Dans la zone \og{\texttt{View project's output}\fg} sélectionner l'option \og{\texttt{Command line argument}\fg} 
+
+Dans la zone \og{\texttt{Command:}\fg} saisir:\\
+\verb+"%bm.pdf"+
+
+Dans la zone \og{\texttt{Forward search}\fg} sélectionner l'option \og{\texttt{DDE Command} \fg} 
+
+Dans la zone \og{\texttt{Command:}\fg}  saisir\newline
+\verb|[ForwardSearch("%bm.pdf","%Wc",%l,0,0,1)]|\\
+\texttt{Server:} \texttt{SUMATRA}\\
+\texttt{Topic:} \texttt{Control}
+
+Dans la zone \og{\texttt{Close document before running (La)TeX}\fg} sélectionner l'option \og{\texttt{Do not close}\fg} .\\
+\\
+Pour plus d'informations sur les commandes DDE de Sumatra PDF consulter l'adresse:\\
+\\
+\url{http://code.google.com/p/sumatrapdf/wiki/DDEcommands}
+
+\section{Note importante}
+\begin{itemize}
+	\item \textbf{Une nouvelle fois:} Actuellement la fonction de recherche avancée ne fonctionne que si le nom du fichier et la globalité de son chemin d'accès ne possède pas d'accents!
+	\item \textbf{Faites attention:} Si vous copiez les lignes de commandes et les chemins depuis Adobe Reader par exemple, un apostrophe (valide) est remplacé par un accent (non valide). Ceci peut altérer le fonctionnement. Par conséquent, il sera nécessaire de remplacer les accents par des apostrophes (la touche au-dessus de la touche ''Entrer'' du clavier).\\
+	Cependant, après des retours de certains utilisateurs il semble que cela dépende de la configuration du système sur lequel le Viewer est installé.	
+	\item Des conseils d'utilisateurs montrent que dans certains cas, un redémarrage de TC peut être nécessaire afin d'activer les changements. Il sera nécessaire d'adapter cela à votre usage.
+	\item En outre, vous devrez utiliser la commande \verb\include\ pour intégrer d'autres fichiers \TeX. En utilisant la commande \verb\input\ vous devrez ajouter l'extension du fichier (i.e. monfichier.tex).
+\end{itemize}
+
+
+\rule{40pt}{2pt}\\
+Amusez-vous bien
+
+\section{Historique des versions}
+11.08.2009: Première version\\
+\\
+23.09.2009: Ajout du conseil utilisateur de C. Wiethoff sur le redémarrage et le procédé de copier\&coller de certains viewers PDF. Ajout du conseil sur la gestion des espaces dans les noms des chemins.\\
+\\
+01.10.2009: Conseil de C. A. Vallejo Pinto sur la manière de changer la configuration pour que Sumatra PDF se positionne au premier plan en appuyant sur ''F5''. Ajout du lien vers les commandes DDE de Sumatra PDF.
+
+03.03.2010: Comportement du Viewer PDF, changements mineurs, changement dans le conseil concernant \verb\include\, les guillemets dans les noms de chemins, MiKTeX 2.8, TeX Live 2009
+
+Merci d'avance pour vos commentaires!
+\end{document}
