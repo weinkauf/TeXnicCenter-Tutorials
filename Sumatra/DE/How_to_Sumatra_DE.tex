@@ -1,0 +1,149 @@
+\documentclass[parskip=half-]{scrartcl}
+\usepackage[ngerman]{babel}
+% Lädt Trennregeln für die deutsche Sprache, auch möglich [english]
+%*********************************************
+
+%*********************************************
+%\usepackage{lmodern}
+%Lädt die Lmodern Schriftart, LaTeX standard
+
+%Lädt linux libertine schrift
+\usepackage{libertine}
+\usepackage[T1]{fontenc}
+%Lädt Vektorschriften, d.h. beliebig vergrößerbare Schriften
+%*********************************************
+
+%*********************************************
+\usepackage[latin1]{inputenc}
+\usepackage{tikz}
+\usepackage{hyperref}
+\title{TeXnicCenter mit Sumatra PDF}
+\author{Basierend auf einem Tutorial von\\
+Martin Hehn\thanks{martin.hehn@manchester.ac.uk}\\
+Korrigiert und aktualisiert von\\
+Benjamin Danowski\thanks{benjamin.danowski@web.de}}
+\date{\today}
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Kurze Einführung}
+Diese Anleitung beschreibt die Benutzung des Sumatra PDF-Viewers (v 1.0.1) zusammen mit TeXnicCenter (v 1.0). 
+
+Nach erfolgreicher Einrichtung erkennt Sumatra PDF bei wiederholtem Kompilieren in TeXnicCenter (TC)  Veränderungen im PDF automatisch und aktualisiert die Ansicht entsprechend, es muss also nicht jedes Mal von Hand geschlossen und neu gestartet werden. Durch Drücken der F5-Taste in TC zeigt Sumatra PDF immer die Seite und den Abschnitt an, in dem sich der Cursor in TC befindet. Sumatra PDF kommt dabei in den Vordergrund.\\
+\textbf{Achtung:} Dummerweise funktioniert die Vorwärts-Suche momentan nur bei Dateinamen ohne Leerzeichen im \textbf{gesamten} Pfad!
+
+Mit einem Doppelklick auf eine Textstelle in Sumatra PDF springt der Cursor in TC an die entsprechende Stelle. TC kommt dabei in den Vordergrund.
+
+\section{Benötigte Programme}
+
+\begin{description}
+	\item[Sumatra] Es wird die Version 1.0.1 benötigt, diese ist unter  \url{http://blog.kowalczyk.info/software/sumatrapdf/index.html} herunterzuladen.
+	\item[TeXnicCenter] Es wird die aktuelle Version (v 1.0) benötigt. \url{http://www.texniccenter.org/}
+	\item[Distribution] Natürlich wird eine funktionierende \LaTeX -Distribution vorausgesetzt. Ich verwende MiKTeX 2.8 (\url{http://miktex.org/}).\\
+Es funktioniert auch mit TeX Live 2008 (\url{http://www.tug.org/texlive/}), hier müssen aber die Dateien 
+\begin{itemize}
+	\item \texttt{pdftex.dll},
+	\item \texttt{pdftex.exe} und
+	\item \texttt{kpathseaxxx.dll}
+\end{itemize}
+ ausgetauscht werden (\url{http://www.tug.org/svn/texlive/trunk/Master/bin/win32/}), da TeX Live 2008 mit einer fehlerhaften Version des \texttt{SyncTeX}-Parsers ausgeliefert wird. \texttt{xxx} steht für eine dreistellige Zahl. Wenn ihr die falsche Datei herunter geladen habt, werdet ihr das schon merken. Danach müssen die Format-Dateien über den TeX Live Manager aktualisiert werden.\\
+Falls jemand Erfahrung mit TeX Live 2009 gemacht hat, soll der- oder diejenige sich bei mir melden.
+\end{description}
+
+\section{Einstellungen in Sumatra PDF}
+Sind mit Sumatra PDF 0.9.4 nicht mehr nötig, die benötigte Befehlszeile wird über die Kommandozeile von TC geliefert. Falls ihr da einen Fehler gemacht haben solltet, kann es nötig sein, die Konfigurationsdatei im Sumatra PDF-Ordner und die entsprechende \texttt{.synctex}-Datei im Ordner der Quelldatei zu löschen.
+%Solltet ihr allerdings die modifizierte Version von William Blum (\url{http://william.famille-blum.org/software/sumatra/index.html}) benutzen, müsst ihr (aktuell) folgendermaßen vorgehen:\\
+
+%Sumatra öffnen und unter 
+
+%\begin{tikzpicture}
+%\node (a) at (0,0) {\texttt{Datei}};
+%\node (b) at (5,-1) {\texttt{Befehlszeile zur Inverssuche setzen}};
+%\node (c) at (0,-1) {};
+%\draw [-] (a.south) -- (c.center) -- (b.west);
+%\end{tikzpicture}
+%\\
+%folgende Befehlszeile setzen:\\
+%\\
+%\verb+"C:\Programme\TeXnicCenter\TEXCNTR.EXE" /ddecmd "[goto('%f','%l')]'"+ \\
+%\\
+%Den Pfad müsst ihr natürlich entsprechend anpassen.\\
+%William Blum aktualisiert seine Version von Sumatra PDF wohl regelmäßig, ohne es in seinem Blog zu posten. Wenn das oben beschriebene Vorgehen nicht mehr notwendig sein sollte, fliegt es aus dieser Anleitung.
+\section{Einstellungen im TeXnicCenter}
+Ich halte es für zweckmäßig, ein spezielles Ausgabeprofil für Sumatra anzulegen, folgende Schritte sind notwendig:
+
+\begin{tikzpicture}
+\node (a) at (0,0) {\texttt{Ausgabe}};
+\node (b) at (5,-1) {\texttt{Ausgabeprofile definieren}};
+\node (c) at (0,-1) {};
+\draw [-] (a.south) -- (c.center) -- (b.west);
+\end{tikzpicture}
+
+\begin{enumerate}
+	\item Das vorhandene Profil \texttt{LaTeX$=>$PDF} markieren,
+	\item auf \texttt{Kopieren} klicken,
+	\item das neue Profil benennen, z.\,B. \texttt{LaTeX$=>$PDF (Sumatra)}.
+\end{enumerate}
+
+Jetzt müssen nachfolgende Einstellungen am Profil vorgenommen werden. Dazu gibt es in TexnicCenter die drei Reiter \texttt{(La)Tex}, \texttt{Nachbearbeitung} und \texttt{Viewer}. Achtet darauf, dass das neue Profil markiert ist.
+
+\textbf{(La)Tex}\\
+ Beim Pfad für den Compiler sollte bereits etwas in der Art\\
+	 \verb+"C:\Programme\MiKTeX 2.7\miktex\bin\pdflatex.exe"+\\
+eingetragen sein (Zur Kontrolle überprüfen und ggf. anpassen).
+
+Bei \texttt{Argumente, die an den Compiler übergeben werden sollen} muss folgendes eingetragen werden:\\
+\verb+-synctex=-1 -interaction=nonstopmode "%Wm"+
+
+\textbf{Nachbearbeitung}\\
+Keine Einstellungen erforderlich
+
+\textbf{Viewer}\\
+Bei \texttt{Pfad der Anwendung} muss folgende Zeile hinterlegt sein:\\
+\verb+"C:\Programme\SumatraPDF\SumatraPDF.exe" -inverse-search+\\ \verb+"\"C:\Programme\TeXnicCenter\TEXCNTR.EXE\" /ddecmd \"[goto('%f','%l')]'\""+
+
+\textbf{Hinweis:} Nach dem \texttt{search} kommt ein Leerzeichen, der Befehl wurde hier nur auf zwei Zeilen aufgeteilt, um auf das Blatt zu passen. Auch hier ggf. den Pfad anpassen.\\
+Weiterhin müssen die Pfadangaben in Anführungszeichen stehen, wenn sie Leerzeichen enthalten.
+
+In der Rubrik \texttt{Projektausgabe betrachten} muss der Radiobutton bei \texttt{Kommandozeile} gesetzt werden
+
+Bei \texttt{Kommando:} wird\\
+\verb+"%bm.pdf"+\\
+eingetragen.
+
+In der Rubrik \texttt{Suche in Ausgabe} muss der Radiobutton bei \texttt{DDE-Kommando} gesetzt werden.
+
+Bei \texttt{Kommando:} wird\\
+\verb+[ForwardSearch("%bm.pdf","%Wc",%l,0,0,1)]+\\
+eingetragen.\\
+\texttt{Server:} \texttt{SUMATRA}\\
+\texttt{Thema:} \texttt{Control}
+
+In der Rubrik \texttt{Vor Kompilierung Ausgabe schließen} muss der Radiobutton bei \texttt{Nicht schließen} gesetzt werden.\\
+\\
+Wenn ihr selber mehr über die DDE-Kommandos für Sumatra PDF lesen wollt:\\
+\\
+\url{http://code.google.com/p/sumatrapdf/wiki/DDEcommands}
+
+\section{Wichtige Hinweise}
+\begin{itemize}
+	\item \textbf{Nochmals:} Die Vorwärtssuche funktioniert momentan nur bei Dateinamen ohne Leerzeichen im gesamten Pfad!
+	\item Wenn ihr die Befehlszeilen und Pfade z.B. aus dem Adobe Reader kopiert, wird aus einem Apostroph (richtig) ein Accent (falsch). Also müsst ihr die Accents gegen Apostrophe (direkt über der \glqq Enter\grqq -Taste) austauschen, sonst funktioniert es nicht.\\
+Nach Rückmeldung von einigen Benutzern ist dieses Verhalten wohl nicht nur vom Viewer, sondern auch von der Systemkonfiguration abhängig. Ihr müsst es also selber herausfinden.
+	\item Ein User berichtete, dass bei ihm ein Neustart von TC nötig war, um die Synchronisierung nutzen zu können.
+	\item	Weiterhin solltet ihr zum Einbinden weiterer \TeX-Dateien \verb\include\ benutzen. Wenn ihr \verb\input\ benutzt, müsst ihr die Dateiendung mit anhängen (z. B. meinedatei.tex).
+\end{itemize}
+
+So und genau so funktioniert es zur vollen Zufriedenheit auf meinem System WinXP SP3. Ich hoffe es hilft.
+
+\section{Versionshistorie}
+11.08.2009: Erste Version\\
+\\
+23.09.2009: Hinweise von C. Wiethoff betreffend Neustart und Copy\&Paste-Verhalten verschiedener PDF-Anzeigeprogramme eingefügt. Hinweis auf Leerzeichen im Dateipfad.\\
+\\
+01.10.2009: Hinweis von C. A. Vallejo Pinto bekommen, wie die Konfiguration zu ändern ist, damit durch Drücken von \glqq F5\grqq\ Sumatra PDF doch in den Vordergrund kommt. Link zu den DDE-Kommandos für Sumatra PDF eingefügt.
+
+07.03.2010: PDF-Viewer-Verhalten, kleinere Änderungen, den Hinweis betreffend \verb\include\ geändert, Anführungszeichen im Pfadnamen, MiKTeX 2.8, TeX Live 2009
+
+Danke für die Hinweise!
+\end{document}
