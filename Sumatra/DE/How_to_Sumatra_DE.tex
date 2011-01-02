@@ -6,9 +6,9 @@
 %*********************************************
 %\usepackage{lmodern}
 %Lädt die Lmodern Schriftart, LaTeX standard
-
+\usepackage{mathptmx}
 %Lädt linux libertine schrift
-\usepackage{libertine}
+%\usepackage{libertine}
 \usepackage[T1]{fontenc}
 %Lädt Vektorschriften, d.h. beliebig vergrößerbare Schriften
 %*********************************************
@@ -108,7 +108,7 @@ Weiterhin müssen die Pfadangaben in Anführungszeichen stehen, wenn sie Leerzeich
 In der Rubrik \texttt{Projektausgabe betrachten} muss der Radiobutton bei \texttt{Kommandozeile} gesetzt werden
 
 Bei \texttt{Kommando:} wird\\
-\verb+"%bm.pdf"+\\
+\verb+"%[Open("%bm.pdf",0,1,1)]+\\
 eingetragen.
 
 In der Rubrik \texttt{Suche in Ausgabe} muss der Radiobutton bei \texttt{DDE-Kommando} gesetzt werden.
@@ -131,7 +131,8 @@ Wenn ihr selber mehr über die DDE-Kommandos für Sumatra PDF lesen wollt:\\
 	\item Wenn ihr die Befehlszeilen und Pfade z.B. aus dem Adobe Reader kopiert, wird aus einem Apostroph (richtig) ein Accent (falsch). Also müsst ihr die Accents gegen Apostrophe (direkt über der \glqq Enter\grqq -Taste) austauschen, sonst funktioniert es nicht.\\
 Nach Rückmeldung von einigen Benutzern ist dieses Verhalten wohl nicht nur vom Viewer, sondern auch von der Systemkonfiguration abhängig. Ihr müsst es also selber herausfinden.
 	\item Ein User berichtete, dass bei ihm ein Neustart von TC nötig war, um die Synchronisierung nutzen zu können.
-	\item	Weiterhin solltet ihr zum Einbinden weiterer \TeX-Dateien \verb\include\ benutzen. Wenn ihr \verb\input\ benutzt, müsst ihr die Dateiendung mit anhängen (z. B. meinedatei.tex).
+	\item Weiterhin solltet ihr zum Einbinden weiterer \TeX-Dateien \verb\include\ benutzen. Wenn ihr \verb\input\ benutzt, müsst ihr die Dateiendung mit anhängen (z. B. meinedatei.tex).
+	\item Wenn es beim Kompilieren Probleme mit einem undefinierten Font gibt und kein passender Ersatz gefunden wird, erscheint die Meldung, dass der Forward Search-Befehl nicht ausgeführt werden konnte. Entweder einen anderen Font wählen oder das Problem beheben.
 \end{itemize}
 
 So und genau so funktioniert es zur vollen Zufriedenheit auf meinem System WinXP SP3. Ich hoffe es hilft.
@@ -145,7 +146,9 @@ So und genau so funktioniert es zur vollen Zufriedenheit auf meinem System WinXP
 
 07.03.2010: PDF-Viewer-Verhalten, kleinere Änderungen, den Hinweis betreffend \verb\include\ geändert, Anführungszeichen im Pfadnamen, MiKTeX 2.8, TeX Live 2009\\
 \\
-23.11.2010: Ein falsches Apostroph gelöscht (Dank an S. Reik), Hinweis auf MiKTeX 2.9 und TeXnicCenter 2.0 alpha.
+23.11.2010: Ein falsches Apostroph gelöscht (Dank an S. Reik), Hinweis auf MiKTeX 2.9 und TeXnicCenter 2.0 alpha.\\
+\\
+01.01.2010: Einen neuen Befehl für \glqq Projektausgabe betrachten \grqq eingefügt. Damit verschwindet wohl die blaue Markierung im PDF nach einer Weile. Dank an M. Sussiek für den Hinweis. Hinweis zu undefinierten Fonts eingefügt.
 
 Danke für die Hinweise!
 \end{document}
