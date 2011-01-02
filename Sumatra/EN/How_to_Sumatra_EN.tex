@@ -1,6 +1,7 @@
 \documentclass[parskip=half-]{scrartcl}
 \usepackage[UKenglish]{babel}
-\usepackage{libertine}
+%\usepackage{libertine}
+\usepackage{mathptmx}
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
 \usepackage{tikz}
@@ -11,13 +12,12 @@
 Martin Hehn\thanks{martin.hehn@manchester.ac.uk}\\
 Updated and corrected by\\
 Benjamin Danowski\thanks{benjamin.danowski@web.de}}
-\date{\today}
 
 \begin{document}
 \maketitle
 \tableofcontents
 \section{Short Introduction}
-This tutorial describes the use of Sumatra PDF viewer (v 1.0.1) in combination with TeXnicCenter (v 1.0).
+This tutorial describes the use of Sumatra PDF viewer (v 1.2) in combination with TeXnicCenter (v 1.0).
 
 After successful setup Sumatra PDF recognizes changes in the PDF file which results from repeated compilation in TeXnicCenter (TC) and updates its document view automatically. You do not have to close and restart the program by hand every time. By pressing the F5 button in TC Sumatra PDF shows the page and the section the cursor resides in. Sumatra comes to the front by doing this.\\
 \textbf{Please note:} Currently forward search only works if the file name and its whole path do not contain spaces!
@@ -27,9 +27,9 @@ A double click in Sumatra PDF should place TCs cursor to the corresponding secti
 \section{Software}
 
 \begin{description}
-	\item[Sumatra] Download Sumatra PDF 1.0.1 at \url{http://blog.kowalczyk.info/software/sumatrapdf/index.html} 
-	\item[TeXnicCenter] Download the latest release (v 1.0). (\url{http://www.texniccenter.org/})
-	\item[Distribution] It is assumed that you have a \LaTeX\ distribution already installed, e.g. MiKTeX 2.8 (\url{http://miktex.org/}).\\
+	\item[Sumatra] Download Sumatra PDF 1.2 at \url{http://blog.kowalczyk.info/software/sumatrapdf/index.html} 
+	\item[TeXnicCenter] Download the latest release (v 1.0). The alpha releases are also working fine. (\url{http://www.texniccenter.org/})
+	\item[Distribution] It is assumed that you have a \LaTeX\ distribution already installed, e.g. MiKTeX 2.9 (\url{http://miktex.org/}).\\
 TeX Live 2008 (\url{http://www.tug.org/texlive/}) also does the job. However, TeX Live 2008 is distributed with a buggy version of the \texttt{SyncTeX} parser, therefore you have to update the following files:
 \begin{itemize}
 	\item \texttt{pdftex.dll},
@@ -37,7 +37,7 @@ TeX Live 2008 (\url{http://www.tug.org/texlive/}) also does the job. However, Te
 	\item \texttt{kpathseaxxx.dll}
 \end{itemize}
 They can be downloaded at \url{http://www.tug.org/svn/texlive/trunk/Master/bin/win32/}. \texttt{xxx} stands for a 3-digit number. If you have downloaded a wrong version, you will notice it. After this you want to update the format files by using the TeX Live manager.\\
-If you have information about TeX Live 2009 please do not hesitate to tell me your findings.
+If you have information about TeX Live 2010 please do not hesitate to tell me your findings.
 \end{description}
 
 \section{Settings in Sumatra PDF}
@@ -91,12 +91,12 @@ At \texttt{Path of executable} insert the following line (path names may vary):\
 At \texttt{View project's output} set the radiobutton to \texttt{Command line argument}
 
 For \texttt{Command:} enter:\\
-\verb+"%bm.pdf"+
+\verb+[Open("%bm.pdf",0,1,1)]+
 
 At \texttt{Forward search} set the radiobutton to \texttt{DDE Command} 
 
 At \texttt{Command:} insert\newline
-\verb|[ForwardSearch("%bm.pdf","%Wc",%l,0,0,1)]|\\
+\verb+[ForwardSearch("%bm.pdf","%Wc",%l,0,0,1)]+\\
 \texttt{Server:} \texttt{SUMATRA}\\
 \texttt{Topic:} \texttt{Control}
 
@@ -113,6 +113,7 @@ If you like to read about the Sumatra PDF DDE commands:\\
 	However, after some feedback from users it seems to depend on the configuration of the system the viewer runs on.
 	\item User advice also showed that a re-start of TC may be neccessary to activate the changes. So you have to find out yourself.
 	\item Furthermore you should use \verb\include\ for embedding other \TeX files. If you use \verb\input\ you have to append the file ending (e.g. myfile.tex).
+	\item If there is a undefined font during compilation no PDF is created with a warning that the Forward Search command could not be executed. Solution: Use another font or solve the problem.
 \end{itemize}
 
 
@@ -126,7 +127,9 @@ Enjoy
 \\
 01.10.2009: Got a hint from C. A. Vallejo Pinto how to change configuration so that Sumatra PDF comes to the front by pressing ``F5''. Added link to Sumatra PDF DDE commands.
 
-03.03.2010: PDF viewer behaviour, minor changes, changed advise concerning \verb\include\, quotation marks in the pathname, MiKTeX 2.8, TeX Live 2009
+03.03.2010: PDF viewer behaviour, minor changes, changed advise concerning \verb\include\, quotation marks in the pathname, MiKTeX 2.8, TeX Live 2009.\\
+\\
+02.01.2010: New command for ``View project's output''. Some minor changes. Advice for unsuccessful compilation due to undefined font.
 
 Thanks for feedback!
 \end{document}
